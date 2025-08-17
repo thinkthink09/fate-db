@@ -1,0 +1,39 @@
+{
+  "name": "fatedb",
+  "version": "1.0.0",
+  "description": "A file-based database system for those who don't want to go through the burden of DB maintenance",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "keywords": [
+    "database",
+    "file-based",
+    "storage",
+    "logging",
+    "json"
+  ],
+  "author": "fatedeath",
+  "license": "MIT",
+  "devDependencies": {
+    "@jest/globals": "^29.7.0",
+    "jest": "^29.7.0"
+  },
+  "jest": {
+    "preset": "default",
+    "testEnvironment": "node",
+    "transform": {}
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "files": [
+    "src/",
+    "index.js",
+    "README.md",
+    "LICENSE"
+  ]
+}

@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# Test coverage
+coverage/
+
+# Test artifacts (from your tests)
+db/
+logs-unit-test/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
