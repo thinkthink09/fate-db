@@ -44,8 +44,14 @@ export class Kingdom extends World {
 	destoryCity(name) {
 		try {
 			typeof name === 'string'
-				? fs.rmSync(this.cities[name].location, { recursive: true, force: true })
-				: fs.rmSync(this.cities[name.name].location, { recursive: true, force: true })
+				? fs.rmSync(this.cities[name].location, {
+						recursive: true,
+						force: true
+				  })
+				: fs.rmSync(this.cities[name.name].location, {
+						recursive: true,
+						force: true
+				  })
 		} catch (e) {
 			console.warn('destory city failed')
 		}
@@ -115,20 +121,14 @@ export class Person extends World {
 		}
 		this.attributes = {
 			...this.attributes,
-			[name]: value,
+			[name]: value
 		}
-		fs.writeFileSync(
-			this.location,
-			JSON.stringify(this.attributes, null, FORMAT_JSON ? '\t' : null)
-		)
+		fs.writeFileSync(this.location, JSON.stringify(this.attributes, null, FORMAT_JSON ? '\t' : null))
 	}
 
 	setAttributes(attributes) {
 		this.attributes = attributes
-		fs.writeFileSync(
-			this.location,
-			JSON.stringify(this.attributes, null, FORMAT_JSON ? '\t' : null)
-		)
+		fs.writeFileSync(this.location, JSON.stringify(this.attributes, null, FORMAT_JSON ? '\t' : null))
 	}
 
 	getAttribute(name) {
@@ -166,6 +166,11 @@ export class Person extends World {
 // naming overloads to make this look more professional
 
 export class Storage extends Kingdom {
+	tables
+	constructor(location) {
+		super(location)
+		this.tables = this.cities
+	}
 	createTable(name) {
 		return this.createCity(name)
 	}
@@ -190,7 +195,10 @@ export class Table extends City {
 }
 
 export class Line extends Person {
-	getData() {
+	getData(name) {
+		if (typeof name !== 'undefined') {
+			return this.getAttribute(name)
+		}
 		return this.getAttributes()
 	}
 	setData(data) {

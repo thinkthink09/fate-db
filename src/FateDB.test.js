@@ -7,8 +7,7 @@ describe('FateDB Service', () => {
 	const testKingdomLocation = `db${path.sep}unit-test`
 
 	beforeAll(() => {
-		if (fs.existsSync(testKingdomLocation))
-			fs.rmSync(testKingdomLocation, { recursive: true, force: true })
+		if (fs.existsSync(testKingdomLocation)) fs.rmSync(testKingdomLocation, { recursive: true, force: true })
 	})
 	let testKingdom = null
 
@@ -97,13 +96,13 @@ describe('FateDB Service', () => {
 		skills: {
 			martial: ['axe master', 'judo', 'karate', 'heavy armor'],
 			weapon: ['axe', 'hammer', 'gauntlet'],
-			armor: ['heavy'],
+			armor: ['heavy']
 		},
 		items: [
 			['healing potion', 15],
 			['bomb', 5],
-			['antidote', 8],
-		],
+			['antidote', 8]
+		]
 	}
 
 	it('should be able to set complicated attributes to person', () => {
@@ -114,7 +113,7 @@ describe('FateDB Service', () => {
 			expect.arrayContaining([
 				['healing potion', 15],
 				['bomb', 5],
-				['antidote', 8],
+				['antidote', 8]
 			])
 		)
 		cityPerson.setAttribute('items', [...cityPerson.getAttribute('items'), ['coffee', '20oz']])
@@ -123,7 +122,7 @@ describe('FateDB Service', () => {
 				['healing potion', 15],
 				['bomb', 5],
 				['antidote', 8],
-				['coffee', '20oz'],
+				['coffee', '20oz']
 			])
 		)
 	})
@@ -136,13 +135,13 @@ describe('FateDB Service', () => {
 		expect(testTable.location).toBe(testCityLocation)
 		expect(Object.keys(testTable.people).length).toBe(1)
 
-		let testData = testTable.getPerson('test-person')
-		expect(testData.getAttribute('items')).toStrictEqual(
+		let testData = testTable.getLine('test-person')
+		expect(testData.getData('items')).toStrictEqual(
 			expect.arrayContaining([
 				['healing potion', 15],
 				['bomb', 5],
 				['antidote', 8],
-				['coffee', '20oz'],
+				['coffee', '20oz']
 			])
 		)
 
@@ -164,7 +163,6 @@ describe('FateDB Service', () => {
 
 	afterAll(() => {
 		// tear down everything
-		if (fs.existsSync(testKingdomLocation))
-			fs.rmSync(testKingdomLocation, { recursive: true, force: true })
+		if (fs.existsSync(testKingdomLocation)) fs.rmSync(testKingdomLocation, { recursive: true, force: true })
 	})
 })
