@@ -3,11 +3,16 @@
 	"version": "1.0.0",
 	"description": "A file-based database system for those who don't want to go through the burden of DB maintenance",
 	"main": "index.js",
+	"exports": {
+		".": "./index.js",
+		"./logger": "./src/FateLogger.js",
+		"./storage": "./src/FateDB.js"
+	},
 	"type": "module",
 	"scripts": {
 		"test": "node --experimental-vm-modules node_modules/jest/bin/jest --detectOpenHandles",
-		"test:watch": "jest --watch",
-		"test:coverage": "jest --coverage"
+		"test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest --watch",
+		"test:coverage": "node --experimental-vm-modules node_modules/jest/bin/jest --coverage"
 	},
 	"keywords": [
 		"database",
@@ -35,6 +40,7 @@
 		"src/",
 		"index.js",
 		"README.md",
-		"LICENSE"
+		"LICENSE",
+		"samples/"
 	]
 }
