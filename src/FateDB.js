@@ -68,7 +68,7 @@ export class City extends World {
 		this.name = name
 		this.kingdom = kingdom
 		fs.readdirSync(location, { withFileTypes: true }).map(
-			({ name }) => (this.people[name] = new Person(this.location + path.sep + name, name, this))
+			({ name }) => (this.people[name] = new Line(this.location + path.sep + name, name, this))
 		)
 	}
 
@@ -79,7 +79,7 @@ export class City extends World {
 		} else {
 			fs.writeFileSync(personHouse, '')
 		}
-		let person = new Person(personHouse, name, this)
+		let person = new Line(personHouse, name, this)
 		this.people[name] = person
 		return person
 	}
@@ -183,6 +183,11 @@ export class Storage extends Kingdom {
 }
 
 export class Table extends City {
+	lines
+	constructor(location, name, kingdom) {
+		super(location, name, kingdom)
+		this.lines = this.people
+	}
 	createLine(name) {
 		return this.createPerson(name)
 	}
@@ -195,10 +200,13 @@ export class Table extends City {
 }
 
 export class Line extends Person {
+	data
+	constructor(location, name, city) {
+		super(location, name, city)
+		this.data = this.attributes
+	}
 	getData(name) {
-		if (typeof name !== 'undefined') {
-			return this.getAttribute(name)
-		}
+		if (typeof name !== 'undefined') return this.getAttribute(name)
 		return this.getAttributes()
 	}
 	setData(data) {
@@ -206,15 +214,4 @@ export class Line extends Person {
 	}
 }
 
-// examples
-
-// const test = () => {
-// 	let appStorage = new Kingdom('db\\app')
-// 	let sampleTable = appStorage.createCity('tableName')
-// 	let sampleData = sampleTable.createPerson('item1')
-// 	sampleData.setAttributes({
-// 		id: 1,
-// 		name: 'item 1',
-// 	})
-// 	console.log(appStorage.getCity('tableName').getPerson('item1').getAttributes())
-// }
+// See examples in the samples/ directory

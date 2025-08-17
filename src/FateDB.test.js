@@ -2,12 +2,15 @@ import fs from 'fs'
 import path from 'path'
 import { jest } from '@jest/globals'
 import { Storage, Kingdom } from './FateDB.js'
+import { example } from '../samples/db-usage.js'
 
 describe('FateDB Service', () => {
 	const testKingdomLocation = `db${path.sep}unit-test`
+	const sampleLocation = `db${path.sep}sample-test`
 
 	beforeAll(() => {
 		if (fs.existsSync(testKingdomLocation)) fs.rmSync(testKingdomLocation, { recursive: true, force: true })
+		if (fs.existsSync(sampleLocation)) fs.rmSync(sampleLocation, { recursive: true, force: true })
 	})
 	let testKingdom = null
 
@@ -129,14 +132,14 @@ describe('FateDB Service', () => {
 
 	test('overload methods, and existing tables and data should be loaded', () => {
 		let testStorage = new Storage(testKingdomLocation)
-		expect(Object.keys(testStorage.cities).length).toBe(2)
+		expect(Object.keys(testStorage.tables).length).toBe(2)
 
 		let testTable = testStorage.getTable('test-city')
 		expect(testTable.location).toBe(testCityLocation)
-		expect(Object.keys(testTable.people).length).toBe(1)
+		expect(Object.keys(testTable.lines).length).toBe(1)
 
-		let testData = testTable.getLine('test-person')
-		expect(testData.getData('items')).toStrictEqual(
+		let testDataLine = testTable.getLine('test-person')
+		expect(testDataLine.getData('items')).toStrictEqual(
 			expect.arrayContaining([
 				['healing potion', 15],
 				['bomb', 5],
@@ -145,7 +148,7 @@ describe('FateDB Service', () => {
 			])
 		)
 
-		expect(Object.keys(testData.getAttribute('skills'))).toStrictEqual(
+		expect(Object.keys(testDataLine.getData('skills'))).toStrictEqual(
 			expect.arrayContaining(['martial', 'weapon', 'armor'])
 		)
 	})
@@ -161,8 +164,26 @@ describe('FateDB Service', () => {
 		expect(fs.existsSync(town.location)).toBe(true)
 	})
 
+	test('sample code should run without errors', () => {
+		// Run the example
+		expect(() => example(sampleLocation)).not.toThrow()
+
+		// Validate the example created the expected structure
+		expect(fs.existsSync(sampleLocation)).toBe(true)
+		expect(fs.existsSync(`${sampleLocation}${path.sep}users`)).toBe(true)
+		expect(fs.existsSync(`${sampleLocation}${path.sep}users${path.sep}user_001`)).toBe(true)
+
+		// Validate the data was stored correctly
+		const storage = new Storage(sampleLocation)
+		const userData = storage.getTable('users').getLine('user_001').getData()
+		expect(userData.name).toBe('John Doe')
+		expect(userData.email).toBe('john@example.com')
+		expect(userData.id).toBe(1)
+	})
+
 	afterAll(() => {
 		// tear down everything
 		if (fs.existsSync(testKingdomLocation)) fs.rmSync(testKingdomLocation, { recursive: true, force: true })
+		if (fs.existsSync(sampleLocation)) fs.rmSync(sampleLocation, { recursive: true, force: true })
 	})
 })
