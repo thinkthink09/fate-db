@@ -5,16 +5,26 @@ A file-based database system for those who don't want to go through the burden o
 ## Installation
 
 ```bash
+npm install git+https://github.com/thinkthink09/fatedb
+```
+
+(soon to be)
+
+```bash
 npm install fatedb
 ```
 
 ## Features
 
-- **File-based storage**: No database server required
-- **Simple API**: Easy-to-use interface for data management
-- **Flexible logging**: Built-in logger with customizable file naming
-- **TypeScript ready**: Works with ES modules
-- **Zero dependencies**: Lightweight and fast
+### DB
+
+-   **File-based storage**: No database workbench required
+-   **Simple API**: Easy-to-use js interface for data management
+-   **Zero dependencies**: Lightweight and fast(maybe)
+
+### Logger
+
+-   **Flexible logging**: File-based logger with customizable file naming
 
 ## Quick Start
 
@@ -34,9 +44,9 @@ const user1 = userTable.createLine('user_001')
 
 // Set data
 user1.setData({
-  id: 1,
-  name: 'John Doe',
-  email: 'john@example.com'
+	id: 1,
+	name: 'John Doe',
+	email: 'john@example.com'
 })
 
 // Retrieve data
@@ -55,7 +65,7 @@ await logger.log('Application started')
 
 // Custom file naming
 const categoryLogger = new FateLogger('logs', (category) => {
-  return category ? `${category}.log` : null
+	return category ? `${category}.log` : null
 })
 
 await categoryLogger.log('User logged in', 'auth')
@@ -66,39 +76,40 @@ await categoryLogger.log('Payment processed', 'payments')
 
 ### Storage
 
-- `new Storage(location)` - Create storage instance
-- `createTable(name)` - Create a new table
-- `getTable(name)` - Get existing table or create if not exists
-- `removeTable(name)` - Delete a table
+-   `new Storage(location)` - Create storage instance
+-   `createTable(name)` - Create a new table
+-   `getTable(name)` - Get existing table or create if not exists
+-   `removeTable(name)` - Delete a table
 
 ### Table
 
-- `createLine(name)` - Create a new data line
-- `getLine(name)` - Get existing line or create if not exists
-- `removeLine(name)` - Delete a line
-- `lines` - Access all lines in the table
+-   `createLine(name)` - Create a new data line
+-   `getLine(name)` - Get existing line or create if not exists
+-   `removeLine(name)` - Delete a line
+-   `lines` - Access all lines in the table
 
 ### Line
 
-- `setData(data)` - Set line data
-- `getData(key?)` - Get specific field or all data
-- `data` - Direct access to line data
+-   `setData(data)` - Set line data
+-   `getData(key?)` - Get specific field or all data
+-   `data` - Direct access to line data
 
 ### FateLogger
 
-- `new FateLogger(location, nameLogic?)` - Create logger instance
-- `log(message, ...params)` - Log a message
+-   `new FateLogger(location, nameLogic?)` - Create logger instance
+-   `log(message, ...params)` - Log a message
 
 ## Examples
 
 Check the `samples/` directory for complete examples:
-- `samples/db-usage.js` - Database operations
-- `samples/logger-usage.js` - Logging examples
+
+-   `samples/db-usage.js` - Database operations
+-   `samples/logger-usage.js` - Logging examples
 
 ## Requirements
 
-- Node.js >= 14.0.0
-- ES modules support
+-   Node.js >= 14.0.0
+-   ES modules support
 
 ## License
 
