@@ -1,12 +1,15 @@
 import fs from 'fs'
 import path from 'path'
 import Logger from './FateLogger.js'
+import { examples } from '../samples/logger-usage.js'
 
 describe('Logger', () => {
-	let loggerLocation = 'logs-unit-test'
+	const loggerLocation = 'logs-unit-test'
+	const sampleLocation = 'logs-sample-test'
 
 	beforeAll(() => {
 		if (fs.existsSync(loggerLocation)) fs.rmSync(loggerLocation, { recursive: true, force: true })
+		if (fs.existsSync(sampleLocation)) fs.rmSync(sampleLocation, { recursive: true, force: true })
 	})
 
 	it('should create log files under logs with today date', async () => {
@@ -48,9 +51,7 @@ describe('Logger', () => {
 	it('should be able to customize log file naming logic', async () => {
 		expect(fs.existsSync(loggerLocation)).toBe(false)
 
-		let customLogger = new Logger(loggerLocation, (filename) =>
-			filename ? filename + '.log' : null
-		)
+		let customLogger = new Logger(loggerLocation, (filename) => (filename ? filename + '.log' : null))
 		// custom logger should not create a new file
 		expect(fs.readdirSync(loggerLocation).length).toBe(0)
 
@@ -65,20 +66,14 @@ describe('Logger', () => {
 		// create a second log file and log
 		await customLogger.log(testLog, 'custom2')
 		// custom logger should create a new file called custom2.log
-		expect(fs.readdirSync(loggerLocation)).toStrictEqual(
-			expect.arrayContaining(['custom.log', 'custom2.log'])
-		)
+		expect(fs.readdirSync(loggerLocation)).toStrictEqual(expect.arrayContaining(['custom.log', 'custom2.log']))
 
 		// log on custom.log again
 		await customLogger.log(testLog, 'custom')
 		// should not create a new file
-		expect(fs.readdirSync(loggerLocation)).toStrictEqual(
-			expect.arrayContaining(['custom.log', 'custom2.log'])
-		)
+		expect(fs.readdirSync(loggerLocation)).toStrictEqual(expect.arrayContaining(['custom.log', 'custom2.log']))
 		// custom logs should be longer than custom2
-		expect(
-			fs.readFileSync(loggerLocation + path.sep + 'custom.log', { encoding: 'utf8' }).length
-		).toBeGreaterThan(
+		expect(fs.readFileSync(loggerLocation + path.sep + 'custom.log', { encoding: 'utf8' }).length).toBeGreaterThan(
 			fs.readFileSync(loggerLocation + path.sep + 'custom2.log', { encoding: 'utf8' }).length
 		)
 
@@ -99,13 +94,25 @@ describe('Logger', () => {
 
 		//current file should still be custom.log, and it's not suppose to log anything new
 		expect(customLogger.currentLogFile).toBe(loggerLocation + path.sep + 'custom.log')
-		expect(fs.readFileSync(customLogger.currentLogFile, { encoding: 'utf8' })).not.toContain(
-			notSupposeToLog
-		)
+		expect(fs.readFileSync(customLogger.currentLogFile, { encoding: 'utf8' })).not.toContain(notSupposeToLog)
+	})
+
+	test('sample code should run without errors', async () => {
+		// Run the examples
+		await expect(examples(sampleLocation)).resolves.not.toThrow()
+
+		// Validate that log directories and files were created
+		expect(fs.existsSync(`${sampleLocation}/basic`)).toBe(true)
+		expect(fs.existsSync(`${sampleLocation}/advanced`)).toBe(true)
+
+		// Check that some log files were created
+		expect(fs.readdirSync(`${sampleLocation}/basic`).length).toBeGreaterThan(0)
+		expect(fs.readdirSync(`${sampleLocation}/advanced`).length).toBeGreaterThan(0)
 	})
 
 	afterEach(() => {
 		// teardown unit test logger dir
 		if (fs.existsSync(loggerLocation)) fs.rmSync(loggerLocation, { recursive: true, force: true })
+		if (fs.existsSync(sampleLocation)) fs.rmSync(sampleLocation, { recursive: true, force: true })
 	})
 })
