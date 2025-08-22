@@ -36,6 +36,10 @@ export class Kingdom extends World {
 		return city
 	}
 
+	hasCity(name) {
+		return this.cities[name] || false
+	}
+
 	getCity(name) {
 		if (this.cities[name]) return this.cities[name]
 		return this.createCity(name)
@@ -52,6 +56,7 @@ export class Kingdom extends World {
 						recursive: true,
 						force: true
 				  })
+			delete this.cities[name]
 		} catch (e) {
 			console.warn('destory city failed')
 		}
@@ -84,6 +89,10 @@ export class City extends World {
 		return person
 	}
 
+	hasPerson(name) {
+		return this.people[name] || false
+	}
+
 	getPerson(name) {
 		if (this.people[name]) return this.people[name]
 		return this.createPerson(name)
@@ -94,6 +103,8 @@ export class City extends World {
 			typeof name === 'string'
 				? fs.rmSync(this.people[name].location, { force: true })
 				: fs.rmSync(this.people[name.name].location, { force: true })
+
+			delete this.people[name]
 		} catch (e) {
 			console.warn('killing person failed')
 		}
@@ -174,6 +185,9 @@ export class Storage extends Kingdom {
 	createTable(name) {
 		return this.createCity(name)
 	}
+	hasTable(name) {
+		return this.hasCity(name)
+	}
 	getTable(name) {
 		return this.getCity(name)
 	}
@@ -190,6 +204,9 @@ export class Table extends City {
 	}
 	createLine(name) {
 		return this.createPerson(name)
+	}
+	hasLine(name) {
+		return this.hasPerson(name)
 	}
 	getLine(name) {
 		return this.getPerson(name)
