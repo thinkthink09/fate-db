@@ -5,9 +5,7 @@
 	"main": "index.js",
 	"types": "index.d.ts",
 	"exports": {
-		".": "./index.js",
-		"./logger": "./src/FateLogger.js",
-		"./storage": "./src/FateDB.js"
+		".": "./index.js"
 	},
 	"type": "module",
 	"scripts": {

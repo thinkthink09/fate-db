@@ -42,24 +42,6 @@ declare module 'fatedb' {
 		getAttributes(): Record<string, any>
 		getCity(): City
 	}
-}
-
-declare module 'fatedb/logger' {
-	export default class Logger {
-		location: string
-		currentLogFile: string | undefined
-		logFileNameLogic: ((...params: any[]) => string | null) | undefined
-
-		constructor(location: string, logFileNameLogic?: (...params: any[]) => string | null)
-		log(message: string, ...params: any[]): Promise<void>
-	}
-}
-
-declare module 'fatedb/storage' {
-	class World {
-		location: string
-		constructor(location: string)
-	}
 
 	export class Storage extends World {
 		tables: Record<string, Table>
@@ -83,5 +65,14 @@ declare module 'fatedb/storage' {
 		getData(): Record<string, any>
 		getData(name: string): any
 		setData(data: Record<string, any>): void
+	}
+
+	export class Logger {
+		location: string
+		currentLogFile: string | undefined
+		logFileNameLogic: ((...params: any[]) => string | null) | undefined
+
+		constructor(location: string, logFileNameLogic?: (...params: any[]) => string | null)
+		log(message: string, ...params: any[]): Promise<void>
 	}
 }
