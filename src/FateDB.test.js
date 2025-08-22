@@ -39,7 +39,7 @@ describe('FateDB Service', () => {
 		expect(city.location).toBe(testCityLocation)
 		expect(city.getKingdom()).toBe(testKingdom)
 		expect(Object.keys(testKingdom.cities).length).toBe(1)
-		expect(testKingdom.hasCity('test-city')).toBeTruthy()
+		expect(testKingdom.hasCity('test-city')).toBe(true)
 		expect(testKingdom.hasCity('other-town')).toBe(false)
 
 		town = testKingdom.getCity('other-town')
@@ -80,8 +80,8 @@ describe('FateDB Service', () => {
 		expect(cityPerson.getCity()).toBe(city)
 
 		// there should be test-person in both town and city
-		expect(town.hasPerson('test-person')).toBe(townPerson)
-		expect(city.hasPerson('test-person')).toBe(cityPerson)
+		expect(town.hasPerson('test-person')).toBe(true)
+		expect(city.hasPerson('test-person')).toBe(true)
 	})
 
 	it('should be able to set attributes to people and not affect others', () => {

@@ -37,7 +37,7 @@ export class Kingdom extends World {
 	}
 
 	hasCity(name) {
-		return this.cities[name] || false
+		return !!this.cities[name]
 	}
 
 	getCity(name) {
@@ -90,7 +90,7 @@ export class City extends World {
 	}
 
 	hasPerson(name) {
-		return this.people[name] || false
+		return !!this.people[name]
 	}
 
 	getPerson(name) {

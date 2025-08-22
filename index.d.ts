@@ -14,6 +14,7 @@ declare module 'fatedb' {
 		cities: Record<string, City>
 		constructor(location: string)
 		createCity(name: string): City
+		hasCity(name: string): boolean
 		getCity(name: string): City
 		destoryCity(name: string | { name: string }): void
 	}
@@ -25,6 +26,7 @@ declare module 'fatedb' {
 		kingdom: Kingdom
 		constructor(location: string, name: string, kingdom: Kingdom)
 		createPerson(name: string): Person
+		hasPerson(name: string): boolean
 		getPerson(name: string): Person
 		killPerson(name: string | { name: string }): void
 		getKingdom(): Kingdom
@@ -47,6 +49,7 @@ declare module 'fatedb' {
 		tables: Record<string, Table>
 		constructor(location: string)
 		createTable(name: string): Table
+		hasTable(name: string): boolean
 		getTable(name: string): Table
 		removeTable(name: string): void
 	}
@@ -55,6 +58,7 @@ declare module 'fatedb' {
 		lines: Record<string, Line>
 		constructor(location: string, name: string, storage: Storage)
 		createLine(name: string): Line
+		hasLine(name: string): boolean
 		getLine(name: string): Line
 		removeLine(name: string): void
 	}
