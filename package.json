@@ -3,6 +3,7 @@
 	"version": "1.0.0",
 	"description": "A file-based database system for those who don't want to go through the burden of DB maintenance",
 	"main": "index.js",
+	"types": "index.d.ts",
 	"exports": {
 		".": "./index.js",
 		"./logger": "./src/FateLogger.js",
