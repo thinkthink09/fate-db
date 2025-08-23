@@ -11,7 +11,7 @@ declare module 'fatedb' {
 
 	// Kingdom class - manages cities
 	export class Kingdom extends World {
-		cities: Record<string, City>
+		cities: Map<string, City>
 		constructor(location: string)
 		createCity(name: string): City
 		hasCity(name: string): boolean
@@ -22,7 +22,7 @@ declare module 'fatedb' {
 	// City class - manages people
 	export class City extends World {
 		name: string
-		people: Record<string, Person>
+		people: Map<string, Person>
 		kingdom: Kingdom
 		constructor(location: string, name: string, kingdom: Kingdom)
 		createPerson(name: string): Person
@@ -36,17 +36,17 @@ declare module 'fatedb' {
 	export class Person extends World {
 		name: string
 		city: City
-		attributes: Record<string, any> | undefined
+		attributes: Map<string, any> | undefined
 		constructor(location: string, name: string, city: City)
 		setAttribute(name: string, value: any): void
-		setAttributes(attributes: Record<string, any>): void
+		setAttributes(attributes: Map<string, any>): void
 		getAttribute(name: string): any
-		getAttributes(): Record<string, any>
+		getAttributes(): Map<string, any>
 		getCity(): City
 	}
 
 	export class Storage extends World {
-		tables: Record<string, Table>
+		tables: Map<string, Table>
 		constructor(location: string)
 		createTable(name: string): Table
 		hasTable(name: string): boolean
@@ -55,7 +55,7 @@ declare module 'fatedb' {
 	}
 
 	export class Table extends World {
-		lines: Record<string, Line>
+		lines: Map<string, Line>
 		constructor(location: string, name: string, storage: Storage)
 		createLine(name: string): Line
 		hasLine(name: string): boolean
@@ -64,11 +64,11 @@ declare module 'fatedb' {
 	}
 
 	export class Line extends World {
-		data: Record<string, any> | undefined
+		data: Map<string, any> | undefined
 		constructor(location: string, name: string, table: Table)
-		getData(): Record<string, any>
+		getData(): Map<string, any>
 		getData(name: string): any
-		setData(data: Record<string, any>): void
+		setData(data: Map<string, any>): void
 	}
 
 	export class Logger {
