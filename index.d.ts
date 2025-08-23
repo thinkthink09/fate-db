@@ -36,12 +36,12 @@ declare module 'fatedb' {
 	export class Person extends World {
 		name: string
 		city: City
-		attributes: Map<string, any> | undefined
+		attributes: { [key: string]: any } | undefined
 		constructor(location: string, name: string, city: City)
 		setAttribute(name: string, value: any): void
-		setAttributes(attributes: Map<string, any>): void
+		setAttributes(attributes: { [key: string]: any }): void
 		getAttribute(name: string): any
-		getAttributes(): Map<string, any>
+		getAttributes(): { [key: string]: any }
 		getCity(): City
 	}
 
@@ -64,11 +64,11 @@ declare module 'fatedb' {
 	}
 
 	export class Line extends World {
-		data: Map<string, any> | undefined
+		data: { [key: string]: any } | undefined
 		constructor(location: string, name: string, table: Table)
-		getData(): Map<string, any>
+		getData(): { [key: string]: any }
 		getData(name: string): any
-		setData(data: Map<string, any>): void
+		setData(data: { [key: string]: any }): void
 	}
 
 	export class Logger {
